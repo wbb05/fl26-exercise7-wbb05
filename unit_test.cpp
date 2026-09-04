@@ -106,10 +106,8 @@ TEST_CASE("treap insert test", "[treap]"){
 	struct TreapNode *root = NULL;
 
 	// Base case
-
 	root = insert(root, 10);
 	REQUIRE(root->key == 10);
-	
 
 	// Add smaller node
 	// Causes rotation
@@ -123,7 +121,6 @@ TEST_CASE("treap insert test", "[treap]"){
 	REQUIRE(root->key == 5);
 	REQUIRE(root->right->key == 10);
 	REQUIRE(root->right->right->key == 15);
- 
 }
 
 // Search
@@ -152,7 +149,7 @@ TEST_CASE("treap search test", "[treap]"){
 	REQUIRE(search(root, 50)->key == 50);
 }
 
-// delete
+// Delete
 TEST_CASE("treap basic delete test", "[treap]"){
 	struct TreapNode *root = NULL;
 	REQUIRE(deleteNode(root, 10) == NULL);
