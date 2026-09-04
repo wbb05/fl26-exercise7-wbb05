@@ -99,19 +99,38 @@ TEST_CASE("treap left rotate", "[treap]"){
 }
 
 // Insert
-
-// NULL root
-// Smaller, greater than root
-
 TEST_CASE("treap insert test", "[treap]"){
+
+	srand(0); // For consistency
+
 	struct TreapNode *root = NULL;
 
+	// Base case
 
+	root = insert(root, 10);
+	REQUIRE(root->key == 10);
+	
+
+	// Add smaller node
+	// Causes rotation
+	root = insert(root, 5);
+	REQUIRE(root->key == 5);
+	REQUIRE(root->left == NULL);
+	REQUIRE(root->right->key == 10);
+
+	// Add larger node
+	root = insert(root, 15);
+	REQUIRE(root->key == 5);
+	REQUIRE(root->right->key == 10);
+	REQUIRE(root->right->right->key == 15);
+ 
 }
 
 // Search
 TEST_CASE("treap search test", "[treap]"){
 	// Base cases
+	srand(0); // For consistency
+
 	struct TreapNode *root = NULL;
 	REQUIRE(search(root, 10) == root);
 
