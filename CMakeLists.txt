@@ -6,4 +6,3 @@ add_executable(clientcode clientcode.cpp treap.cpp treap.h)
 
 # Executable for unit test
 add_executable(unit_test unit_test.cpp treap.cpp treap.h)
-
