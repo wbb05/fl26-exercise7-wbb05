@@ -173,11 +173,12 @@ TEST_CASE("treap complicated delete test", "[treap]"){
 	//     x
 	//  y / \ a
 	//z/ \ b
-	struct TreapNode *x = newNode(10);
-	struct TreapNode *y = newNode(20);
-	struct TreapNode *z = newNode(30);
-	struct TreapNode *a = newNode(40);
-	struct TreapNode *b = newNode(50);
+	srand(0); // For consistency
+	struct TreapNode *x = newNode(50);
+	struct TreapNode *y = newNode(30);
+	struct TreapNode *z = newNode(20);
+	struct TreapNode *a = newNode(60);
+	struct TreapNode *b = newNode(40);
 
 	x->left = y;
 	x->right = a;
@@ -185,5 +186,9 @@ TEST_CASE("treap complicated delete test", "[treap]"){
 	y->right = b;
 
 	// Delete y
-	deleteNode(x, 20);
+	auto deletedNode = deleteNode(x, 30);
+
+	REQUIRE(x->right->key == 60); // right is still a
+	REQUIRE(x->left->key == 40); // left is now b
+	REQUIRE(x->left->left->key == 20); // child of b is now z
 }
