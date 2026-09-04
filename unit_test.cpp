@@ -118,15 +118,72 @@ TEST_CASE("treap search test", "[treap]"){
 	root = insert(root, 50);
 	REQUIRE(search(root, 50) == root);
 	
+	// Simple tree
 	insert(root, 60);
 	insert(root, 40);
 
 	REQUIRE(search(root, 60) == root->right);
 	REQUIRE(search(root, 40) == root->left);
+
+	// More complicated tree
+	insert(root, 30);
+	insert(root, 20);
+	insert(root, 50);
+	insert(root, 80);
+	REQUIRE(search(root, 50)->key == 50);
 }
 
-/*
-search
-insert
-deleteNode
-*/
+// delete
+TEST_CASE("treap basic delete test", "[treap]"){
+	struct TreapNode *root = NULL;
+	REQUIRE(deleteNode(root, 10) == NULL);
+
+	// Simple tree
+	//    10
+	//  5/   \15
+	//   \7 17/
+	root = insert(root, 10);
+	
+	root->left = newNode(5);
+	root->right = newNode(15);
+	root->left->right = newNode(7);
+	root->right->left = newNode(17);
+	
+
+	// Delete left node
+	deleteNode(root, 5);
+	REQUIRE(root->left->key == 7);
+	REQUIRE(root->right->key == 15);
+
+	// Delete right node
+	deleteNode(root, 15);
+	REQUIRE(root->left->key == 7);
+	REQUIRE(root->right->key == 17);
+
+	// Delete left again
+	deleteNode(root, 7);
+	REQUIRE(root->left == NULL);
+	REQUIRE(root->right->key == 17);
+
+}
+
+// Delete with a more complicated tree
+TEST_CASE("treap complicated delete test", "[treap]"){
+	// Set up tree 
+	//     x
+	//  y / \ a
+	//z/ \ b
+	struct TreapNode *x = newNode(10);
+	struct TreapNode *y = newNode(20);
+	struct TreapNode *z = newNode(30);
+	struct TreapNode *a = newNode(40);
+	struct TreapNode *b = newNode(50);
+
+	x->left = y;
+	x->right = a;
+	y->left = z;
+	y->right = b;
+
+	// Delete y
+	deleteNode(x, 20);
+}
